@@ -19,9 +19,9 @@ VMWareApiInvoker.prototype = Object.extendsObject(VMWareCloudAPIBase, {
 		var clusterName = parameters.get("ClusterName");
 		var location = parameters.get("Location");
 		if(JSUtil.nil(clusterName)){
-		throw new CMPVMwareAPIException(" Cluster not provided",404);
+			throw new CMPVMwareAPIException(" Cluster not provided",404);
 		}
-			
+
 		var serviceInstance = this.getServiceInstance();
 		var datacenter =   new Packages.com.vmware.vim25.mo.InventoryNavigator(serviceInstance.getRootFolder()).searchManagedEntity("Datacenter", location);
 		var clusterComputeResources = new Packages.com.vmware.vim25.mo.InventoryNavigator(datacenter).searchManagedEntities("ClusterComputeResource");
@@ -125,6 +125,42 @@ VMWareApiInvoker.prototype = Object.extendsObject(VMWareCloudAPIBase, {
 		return volume;
 	},
 
+
+	updateConfigTools: function (parameters){
+		ms.log("VMARE Reset Tools START");
+		var serviceInstance = this.getServiceInstance();  var location = parameters.get('Location');
+		var instanceName = parameters.get('NodeName');
+		ms.log("VMARE Reset Tools Instance Name: " + instanceName);
+		var inventoryNavigator = new Packages.com.vmware.vim25.mo.InventoryNavigator(serviceInstance.getRootFolder());
+		var configSpec = new Packages.com.vmware.vim25.VirtualMachineConfigSpec();
+		var toolConfig = new Packages.com.vmware.vim25.ToolsConfigInfo();
+		toolConfig.setToolsUpgradePolicy("manual");
+		configSpec.setTools(toolConfig);
+
+		var vm = inventoryNavigator.searchManagedEntity("VirtualMachine", instanceName);
+		var vmClass = vm.getClass();
+		var methods = vmClass.getMethods();
+
+		var vmTask;
+		try {
+			vmTask = vm.reconfigVM_Task(configSpec);
+		}
+		catch(err){
+			throw new GenericException('Could not update VM tools config: ' + err);
+		}
+
+		var taskStatus = vmTask.waitForTask() + '';
+
+		var success = 'success';
+
+
+		if (taskStatus != null && taskStatus.toUpperCase() != success.toUpperCase()){
+			throw new GenericException('Task error updating VM tools config: '  + taskStatus);
+		}
+
+		return;
+	},
+
 	type: 'VMWareApiInvoker'
 });]]></script>
         <sys_class_name>ecc_agent_script_include</sys_class_name>
@@ -133,7 +169,7 @@ VMWareApiInvoker.prototype = Object.extendsObject(VMWareCloudAPIBase, {
         <sys_domain>global</sys_domain>
         <sys_domain_path>/</sys_domain_path>
         <sys_id>1789211777a23300c14554389a1061da</sys_id>
-        <sys_mod_count>7</sys_mod_count>
+        <sys_mod_count>8</sys_mod_count>
         <sys_name>VMWareApiInvoker</sys_name>
         <sys_overrides/>
         <sys_package display_value="VMWare Custom" source="sn_vmware_custom">0e87a59377a23300c14554389a10613c</sys_package>
@@ -141,6 +177,6 @@ VMWareApiInvoker.prototype = Object.extendsObject(VMWareCloudAPIBase, {
         <sys_scope display_value="VMWare Custom">0e87a59377a23300c14554389a10613c</sys_scope>
         <sys_update_name>ecc_agent_script_include_1789211777a23300c14554389a1061da</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2019-07-15 08:55:47</sys_updated_on>
+        <sys_updated_on>2019-07-15 10:34:33</sys_updated_on>
     </ecc_agent_script_include>
 </record_update>
