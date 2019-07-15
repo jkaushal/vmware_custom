@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update sys_domain="global" table="ecc_agent_script_include">
+    <ecc_agent_script_include action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <description/>
+        <name>VMWareApiInvoker</name>
+        <script><![CDATA[var VMWareApiInvoker = Class.create();
+VMWareApiInvoker.prototype = Object.extendsObject(VMWareCloudAPIBase, {
+
+	/**
+	 * Parameters and headers are expected to come from the exchange from the blueprint
+	 * orchestrator on the instance side.
+	 */
+	initialize: function(parameters, headers) {
+		this.parameters = parameters;
+		this.headers = headers;
+	},
+
+	selectDatastore: function(){
+		var clusterName = parameters.get("ClusterName");
+		var location = parameters.get("Location");
+		var serviceInstance = this.getServiceInstance();
+		var datacenter =   new Packages.com.vmware.vim25.mo.InventoryNavigator(serviceInstance.getRootFolder()).searchManagedEntity("Datacenter", location);
+		var clusterComputeResources = new Packages.com.vmware.vim25.mo.InventoryNavigator(datacenter).searchManagedEntities("ClusterComputeResource");
+		for (var clusterComputeResourceInd in clusterComputeResources) {
+			var cluster = clusterComputeResources[clusterComputeResourceInd];
+			if (cluster.getName() == clusterName){
+				var datastores =  cluster.getPropertyByPath("datastore");
+				for (var datastoreMorInd in datastores) {
+				
+					var ds = Packages.com.vmware.vim25.mo.util.MorUtil.createExactManagedObject(serviceInstance.getServerConnection(), datastores[datastoreMorInd]);
+					ms.log('Freee Space'+ds.getSummary().getFreeSpace());
+					
+				}
+				// do all the custom chevcks like state/name/etc here, add only those datastores which fulfil your criteria
+			}
+				
+			}
+							// once we have all the datastores listed according to the criterias, we will sort them out based on their free space
+							// we will find the datastore with maximaum freespace and selected that.
+// 							new Packages.java.util.Collections.sort(availableDatastore, new java.util.Comparator<new Packages.com.vmware.vim25.mo.Datastore>() {
+// 								@Override
+// 								public int compare(Datastore left, Datastore o2) {
+// 									return Longs.compare(left.getSummary().getFreeSpace(), o2.getSummary().getFreeSpace());
+// 								}
+// 							});
+// 							System.out.println("availableDatastore = " + availableDatastore);
+// 						};
+// 						Datastore datastore = availableDatastore.get(availableDatastore.size());
+// 						System.out.println(datastore);
+				
+		},
+			type: 'VMWareApiInvoker'
+	});]]></script>
+        <sys_class_name>ecc_agent_script_include</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2019-07-15 07:25:41</sys_created_on>
+        <sys_domain>global</sys_domain>
+        <sys_domain_path>/</sys_domain_path>
+        <sys_id>1789211777a23300c14554389a1061da</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>VMWareApiInvoker</sys_name>
+        <sys_overrides/>
+        <sys_package display_value="VMWare Custom" source="sn_vmware_custom">0e87a59377a23300c14554389a10613c</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="VMWare Custom">0e87a59377a23300c14554389a10613c</sys_scope>
+        <sys_update_name>ecc_agent_script_include_1789211777a23300c14554389a1061da</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2019-07-15 07:25:41</sys_updated_on>
+    </ecc_agent_script_include>
+</record_update>
