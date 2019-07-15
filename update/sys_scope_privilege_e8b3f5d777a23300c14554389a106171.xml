@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_scope_privilege">
+    <sys_scope_privilege action="INSERT_OR_UPDATE">
+        <operation>execute</operation>
+        <source_scope display_value="VMWare Custom">0e87a59377a23300c14554389a10613c</source_scope>
+        <status>allowed</status>
+        <sys_class_name>sys_scope_privilege</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2019-07-15 08:10:01</sys_created_on>
+        <sys_id>e8b3f5d777a23300c14554389a106171</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>CAPIOrchestratorServiceScript.executeApi</sys_name>
+        <sys_package display_value="VMWare Custom" source="sn_vmware_custom">0e87a59377a23300c14554389a10613c</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="VMWare Custom">0e87a59377a23300c14554389a10613c</sys_scope>
+        <sys_update_name>sys_scope_privilege_e8b3f5d777a23300c14554389a106171</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2019-07-15 08:10:01</sys_updated_on>
+        <target_name>CAPIOrchestratorServiceScript.executeApi</target_name>
+        <target_scope display_value="Global">global</target_scope>
+        <target_type>scriptable</target_type>
+    </sys_scope_privilege>
+</record_update>

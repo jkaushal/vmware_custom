@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sn_capi_config_overrides">
+    <sn_capi_config_overrides action="INSERT_OR_UPDATE">
+        <cloud_api display_value="VMWare Custom Compute API">061969d377a23300c14554389a106164</cloud_api>
+        <config_parameter display_value="Credentials">71684c340b3222004b1b812f15673aa0</config_parameter>
+        <override_value>$(CloudCredential.password)</override_value>
+        <sys_class_name>sn_capi_config_overrides</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2019-07-15 08:09:05</sys_created_on>
+        <sys_id>e873b5d777a23300c14554389a106189</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>$(CloudCredential.password)</sys_name>
+        <sys_package display_value="VMWare Custom" source="sn_vmware_custom">0e87a59377a23300c14554389a10613c</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="VMWare Custom">0e87a59377a23300c14554389a10613c</sys_scope>
+        <sys_update_name>sn_capi_config_overrides_e873b5d777a23300c14554389a106189</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2019-07-15 08:09:05</sys_updated_on>
+    </sn_capi_config_overrides>
+</record_update>
