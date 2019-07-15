@@ -83,31 +83,21 @@ VMWareApiInvoker.prototype = Object.extendsObject(VMWareCloudAPIBase, {
 		}
 		//var diskName = "[" + storageServer + "] disks/" + volumeName + ".vmdk";
 		var diskName = dirPath + "/" + volumeName + ".vmdk";
-
 		fileManager.makeDirectory(dirPath,datacenter,true);
-
 		var virtualDiskSpec = new Packages.com.vmware.vim25.FileBackedVirtualDiskSpec();
 		virtualDiskSpec.setAdapterType('lsiLogic');
-
 		if(thin) virtualDiskSpec.setDiskType("thin");
-
 		if(diskType && validDiskTypes[diskType]) virtualDiskSpec.setDiskType(diskType);
-
 		virtualDiskSpec.setCapacityKb(1024 * 1024 * size);
-
 		var diskTask;
-
 		try{
 			diskTask = virtualDiskManager.createVirtualDisk_Task(diskName, datacenter, virtualDiskSpec);
 		}
 		catch(err){
 			throw new GenericException('Could not create volume: ' + err);
 		}
-
 		var taskStatus = diskTask.waitForTask() + '';
-
 		var success = 'success';
-
 
 		if (taskStatus != null && taskStatus.toUpperCase() != success.toUpperCase()){
 			throw new GenericException('Task error creating disk: ' + diskName + ' || ' + volumeName + ' || ' + taskStatus);
@@ -169,7 +159,7 @@ VMWareApiInvoker.prototype = Object.extendsObject(VMWareCloudAPIBase, {
         <sys_domain>global</sys_domain>
         <sys_domain_path>/</sys_domain_path>
         <sys_id>1789211777a23300c14554389a1061da</sys_id>
-        <sys_mod_count>8</sys_mod_count>
+        <sys_mod_count>10</sys_mod_count>
         <sys_name>VMWareApiInvoker</sys_name>
         <sys_overrides/>
         <sys_package display_value="VMWare Custom" source="sn_vmware_custom">0e87a59377a23300c14554389a10613c</sys_package>
@@ -177,6 +167,6 @@ VMWareApiInvoker.prototype = Object.extendsObject(VMWareCloudAPIBase, {
         <sys_scope display_value="VMWare Custom">0e87a59377a23300c14554389a10613c</sys_scope>
         <sys_update_name>ecc_agent_script_include_1789211777a23300c14554389a1061da</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2019-07-15 10:34:33</sys_updated_on>
+        <sys_updated_on>2019-07-15 10:42:33</sys_updated_on>
     </ecc_agent_script_include>
 </record_update>
