@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sn_capi_cloud_api">
+    <sn_capi_cloud_api action="INSERT_OR_UPDATE">
+        <category display_value="Compute">57c0dbd9934b22004a9032bfa67ffb79</category>
+        <cloud_api_interface display_value="Compute Interface (Custom)">269865d377a23300c14554389a10611b</cloud_api_interface>
+        <cloud_api_name>VMWare Custom Compute API</cloud_api_name>
+        <connector display_value="Script Connector">4cceec0f0b1322003969a387b6673a80</connector>
+        <description>Scripted API for VMWare Day2 operations</description>
+        <is_scripted>true</is_scripted>
+        <is_system_defined>false</is_system_defined>
+        <provider display_value="Compute-Custom">093861d377a23300c14554389a106104</provider>
+        <sys_class_name>sn_capi_cloud_api</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2019-07-15 07:23:42</sys_created_on>
+        <sys_id>061969d377a23300c14554389a106164</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>VMWare Custom Compute API</sys_name>
+        <sys_package display_value="VMWare Custom" source="sn_vmware_custom">0e87a59377a23300c14554389a10613c</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="VMWare Custom">0e87a59377a23300c14554389a10613c</sys_scope>
+        <sys_update_name>sn_capi_cloud_api_061969d377a23300c14554389a106164</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2019-07-15 07:23:42</sys_updated_on>
+        <version>1.0</version>
+    </sn_capi_cloud_api>
+</record_update>
