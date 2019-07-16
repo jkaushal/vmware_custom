@@ -4,7 +4,7 @@
         <category display_value="Storage">4ed0dbd9934b22004a9032bfa67ffb7e</category>
         <description/>
         <name>Storage Custom</name>
-        <provider display_value="VMWare Custom">06086d9377a23300c14554389a106199</provider>
+        <provider/>
         <sys_class_name>sn_capi_product</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2019-07-15 07:19:41</sys_created_on>
