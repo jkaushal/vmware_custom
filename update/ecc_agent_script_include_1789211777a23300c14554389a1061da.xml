@@ -25,6 +25,8 @@ VMWareApiInvoker.prototype = Object.extendsObject(VMWareCloudAPIBase, {
 		var serviceInstance = this.getServiceInstance();
 		var datacenter =   new Packages.com.vmware.vim25.mo.InventoryNavigator(serviceInstance.getRootFolder()).searchManagedEntity("Datacenter", location);
 		var clusterComputeResources = new Packages.com.vmware.vim25.mo.InventoryNavigator(datacenter).searchManagedEntities("ClusterComputeResource");
+		var datastoreMap = {};
+		var freeSpaceList = [];
 		for (var clusterComputeResourceInd in clusterComputeResources) {
 			var cluster = clusterComputeResources[clusterComputeResourceInd];
 			if (cluster.getName() == clusterName){
@@ -32,11 +34,19 @@ VMWareApiInvoker.prototype = Object.extendsObject(VMWareCloudAPIBase, {
 				for (var datastoreMorInd in datastores) {
 
 					var ds = Packages.com.vmware.vim25.mo.util.MorUtil.createExactManagedObject(serviceInstance.getServerConnection(), datastores[datastoreMorInd]);
-					ms.log('Freee Space'+ds.getSummary().getFreeSpace());
-
+					
+					freeSpaceList.push(ds.getSummary().getFreeSpace());
+					datastoreMap[ds.getSummary().getFreeSpace()]= ds.getName();
 				}
 			}
 		}
+		freeSpaceList.sort();
+		var output = {};
+		output['ClusterName'] = clusterName;
+		output.Datastore = datastoreMap[freeSpaceList[freeSpaceList.length -1]];
+		output.Datastore_Freespace = freeSpaceList[freeSpaceList.length -1];
+		output.Location = location;
+		return new JSON().encode(output);
 	},
 
 
@@ -159,7 +169,7 @@ VMWareApiInvoker.prototype = Object.extendsObject(VMWareCloudAPIBase, {
         <sys_domain>global</sys_domain>
         <sys_domain_path>/</sys_domain_path>
         <sys_id>1789211777a23300c14554389a1061da</sys_id>
-        <sys_mod_count>10</sys_mod_count>
+        <sys_mod_count>22</sys_mod_count>
         <sys_name>VMWareApiInvoker</sys_name>
         <sys_overrides/>
         <sys_package display_value="VMWare Custom" source="sn_vmware_custom">0e87a59377a23300c14554389a10613c</sys_package>
@@ -167,6 +177,6 @@ VMWareApiInvoker.prototype = Object.extendsObject(VMWareCloudAPIBase, {
         <sys_scope display_value="VMWare Custom">0e87a59377a23300c14554389a10613c</sys_scope>
         <sys_update_name>ecc_agent_script_include_1789211777a23300c14554389a1061da</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2019-07-15 10:42:33</sys_updated_on>
+        <sys_updated_on>2019-07-16 13:51:50</sys_updated_on>
     </ecc_agent_script_include>
 </record_update>
