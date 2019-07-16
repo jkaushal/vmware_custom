@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_include">
+    <sys_script_include action="INSERT_OR_UPDATE">
+        <access>public</access>
+        <active>true</active>
+        <api_name>sn_vmware_custom.VMWareCAPIAPIInvoker</api_name>
+        <client_callable>false</client_callable>
+        <description/>
+        <name>VMWareCAPIAPIInvoker</name>
+        <script><![CDATA[var VMWareCAPIAPIInvoker = Class.create();
+VMWareCAPIAPIInvoker.prototype = {
+	initialize: function(endpoint,datacenterCred,datacenter) {
+		this.endpoint=endpoint;
+		this.datacenterCred=datacenterCred;
+		this.datacenter=datacenter;
+	},
+	selectDataStore : function(vmwareParameters){
+		var methodName = "SelectDatastoreForCluster";
+		this.callCapi(methodName,vmwareParameters);
+	},
+
+	callCapi: function(operation,vmwareParameters){
+		var capi = new sn_cloud_api.CAPIOrchestratorServiceScript();
+		var interfaceName = "Compute Interface (Extension)";
+		var version = "1.0";
+		var providerName = "vmware-compute";
+		// execute the api call
+		capi.executeApi(providerName, version, this.datacenterCred, interfaceName,operation, this.endpoint, vmwareParameters,"","",this.datacenter); 
+
+	},
+
+	type: 'VMWareCAPIAPIInvoker'
+};]]></script>
+        <sys_class_name>sys_script_include</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2019-07-16 14:08:12</sys_created_on>
+        <sys_id>451e88fb77e63300c14554389a1061c5</sys_id>
+        <sys_mod_count>25</sys_mod_count>
+        <sys_name>VMWareCAPIAPIInvoker</sys_name>
+        <sys_package display_value="VMWare Custom" source="sn_vmware_custom">0e87a59377a23300c14554389a10613c</sys_package>
+        <sys_policy>read</sys_policy>
+        <sys_scope display_value="VMWare Custom">0e87a59377a23300c14554389a10613c</sys_scope>
+        <sys_update_name>sys_script_include_451e88fb77e63300c14554389a1061c5</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2019-07-16 14:53:00</sys_updated_on>
+    </sys_script_include>
+</record_update>
