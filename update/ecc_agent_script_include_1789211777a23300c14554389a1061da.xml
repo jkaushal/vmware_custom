@@ -13,6 +13,7 @@ VMWareApiInvoker.prototype = Object.extendsObject(VMWareCloudAPIBase, {
 	initialize: function(parameters, headers) {
 		this.parameters = parameters;
 		this.headers = headers;
+		var VMUtils = new Packages.com.snc.cmp.connector.util.VMUtils();	
 	},
 
 	selectDatastore: function(){
@@ -34,7 +35,7 @@ VMWareApiInvoker.prototype = Object.extendsObject(VMWareCloudAPIBase, {
 				for (var datastoreMorInd in datastores) {
 
 					var ds = Packages.com.vmware.vim25.mo.util.MorUtil.createExactManagedObject(serviceInstance.getServerConnection(), datastores[datastoreMorInd]);
-					
+
 					freeSpaceList.push(ds.getSummary().getFreeSpace());
 					datastoreMap[ds.getSummary().getFreeSpace()]= ds.getName();
 				}
@@ -67,7 +68,7 @@ VMWareApiInvoker.prototype = Object.extendsObject(VMWareCloudAPIBase, {
 		var location = parameters.get('Location');
 		var virtualDiskManager = serviceInstance.getVirtualDiskManager();
 		var inventoryNavigator = new Packages.com.vmware.vim25.mo.InventoryNavigator(serviceInstance.getRootFolder());
-		var datacenter = VMUtils.validateReference(inventoryNavigator.searchManagedEntity("Datacenter",location), "Could not find datacenter : ");
+		var datacenter = inventoryNavigator.searchManagedEntity("Datacenter",location);
 		var volumeName = parameters.get('VolumeName');
 		var size = parameters.get('Size');
 		var additionalParametersJSON = parameters.get('AdditionalParameters') + '';
@@ -96,19 +97,21 @@ VMWareApiInvoker.prototype = Object.extendsObject(VMWareCloudAPIBase, {
 		fileManager.makeDirectory(dirPath,datacenter,true);
 		var virtualDiskSpec = new Packages.com.vmware.vim25.FileBackedVirtualDiskSpec();
 		virtualDiskSpec.setAdapterType('lsiLogic');
-		if(thin) virtualDiskSpec.setDiskType("thin");
-		if(diskType && validDiskTypes[diskType]) virtualDiskSpec.setDiskType(diskType);
+		virtualDiskSpec.setDiskType("thin");
+		//if(diskType && validDiskTypes[diskType]) virtualDiskSpec.setDiskType(diskType);
 		virtualDiskSpec.setCapacityKb(1024 * 1024 * size);
 		var diskTask;
 		try{
+
 			diskTask = virtualDiskManager.createVirtualDisk_Task(diskName, datacenter, virtualDiskSpec);
 		}
 		catch(err){
 			throw new GenericException('Could not create volume: ' + err);
 		}
+		
 		var taskStatus = diskTask.waitForTask() + '';
+		ms.log('Invoking taskStatus'+taskStatus);
 		var success = 'success';
-
 		if (taskStatus != null && taskStatus.toUpperCase() != success.toUpperCase()){
 			throw new GenericException('Task error creating disk: ' + diskName + ' || ' + volumeName + ' || ' + taskStatus);
 		}
@@ -140,7 +143,6 @@ VMWareApiInvoker.prototype = Object.extendsObject(VMWareCloudAPIBase, {
 		var vm = inventoryNavigator.searchManagedEntity("VirtualMachine", instanceName);
 		var vmTask;
 		try {
-			ms.log('SSSS'+vm);
 			vmTask = vm.reconfigVM_Task(configSpec);
 		}
 		catch(err){
@@ -167,7 +169,7 @@ VMWareApiInvoker.prototype = Object.extendsObject(VMWareCloudAPIBase, {
         <sys_domain>global</sys_domain>
         <sys_domain_path>/</sys_domain_path>
         <sys_id>1789211777a23300c14554389a1061da</sys_id>
-        <sys_mod_count>26</sys_mod_count>
+        <sys_mod_count>41</sys_mod_count>
         <sys_name>VMWareApiInvoker</sys_name>
         <sys_overrides/>
         <sys_package display_value="VMWare Custom" source="sn_vmware_custom">0e87a59377a23300c14554389a10613c</sys_package>
@@ -175,6 +177,6 @@ VMWareApiInvoker.prototype = Object.extendsObject(VMWareCloudAPIBase, {
         <sys_scope display_value="VMWare Custom">0e87a59377a23300c14554389a10613c</sys_scope>
         <sys_update_name>ecc_agent_script_include_1789211777a23300c14554389a1061da</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2019-07-17 06:34:09</sys_updated_on>
+        <sys_updated_on>2019-07-18 06:56:24</sys_updated_on>
     </ecc_agent_script_include>
 </record_update>

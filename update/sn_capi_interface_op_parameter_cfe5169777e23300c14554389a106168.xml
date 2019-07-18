@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?><record_update table="sn_capi_interface_op_parameter">
     <sn_capi_interface_op_parameter action="INSERT_OR_UPDATE">
-        <capi_interface_operation display_value="AssociateVolume">40b5929777e23300c14554389a10618c</capi_interface_operation>
+        <capi_interface_operation display_value="CreateVolume">40b5929777e23300c14554389a10618c</capi_interface_operation>
         <parameter_name>StorageVolumeProfile</parameter_name>
         <sys_class_name>sn_capi_interface_op_parameter</sys_class_name>
         <sys_created_by>admin</sys_created_by>

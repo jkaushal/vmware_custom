@@ -6,8 +6,12 @@
         <script><![CDATA[associateTags();
 
 function associateTags(){
-	var vmwareApi = new VMWareApiInvoker(this.parameters, this.headers);
-	var response = vmwareApi.assignTags(resourceId,tagsJSON,createCategories,createTags,resourceType);
+	var vmwareApi = new VMWareRestAPI(this.parameters, this.headers);
+	var resourceId = this.parameters.get("resourceId");
+	var tagsJSON = this.parameters.get("Tags");
+	var resourceType = this.parameters.get("ResourceType");
+	ms.log('DDDDDD'+tagsJSON)
+	var response = vmwareApi.assignTag(resourceId,new JSON().encode(tagsJSON),false,false,resourceType);
 	return response;
 }]]></script>
         <sys_class_name>ecc_agent_script_include</sys_class_name>
@@ -16,7 +20,7 @@ function associateTags(){
         <sys_domain>global</sys_domain>
         <sys_domain_path>/</sys_domain_path>
         <sys_id>671546df77a23300c14554389a106118</sys_id>
-        <sys_mod_count>2</sys_mod_count>
+        <sys_mod_count>6</sys_mod_count>
         <sys_name>compute-custom-1.0-AssociateTags</sys_name>
         <sys_overrides/>
         <sys_package display_value="VMWare Custom" source="sn_vmware_custom">0e87a59377a23300c14554389a10613c</sys_package>
@@ -24,6 +28,6 @@ function associateTags(){
         <sys_scope display_value="VMWare Custom">0e87a59377a23300c14554389a10613c</sys_scope>
         <sys_update_name>ecc_agent_script_include_671546df77a23300c14554389a106118</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2019-07-15 10:53:49</sys_updated_on>
+        <sys_updated_on>2019-07-18 07:57:48</sys_updated_on>
     </ecc_agent_script_include>
 </record_update>

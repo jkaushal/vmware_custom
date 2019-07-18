@@ -13,18 +13,23 @@ VMWareCAPIAPIInvoker.prototype = {
 		this.datacenterCred=datacenterCred;
 		this.datacenter=datacenter;
 	},
-	test : function(){
-		var vmwareParameters = {};
-		vmwareParameters['NodeID']='vm-6110';
-		var endpoint = "https://10.198.1.13/sdk";
-		var dcCred= 'd35d077bdba47300a4452f0e0b961960';
-		var datacenter = 'devcloud';
-		var api = new sn_vmware_custom.VMWareCAPIAPIInvoker(endpoint,dcCred,datacenter);
-		api.resetVMWareToolsUpgrade(global.JSON.stringify(vmwareParameters));
-
-	},
 	selectDataStore : function(vmwareParameters){
 		var operation = "SelectDatastoreForCluster";
+		this.callCapi(operation,vmwareParameters);
+	},
+
+	assignTags : function(vmwareParameters){
+		var operation = "AssociateTags";
+		this.callCapi(operation,vmwareParameters);
+	},
+
+	createVolume : function(vmwareParameters1){
+		var vmwareParameters = {};
+		vmwareParameters['VolumeName']='demo_vol1';
+		vmwareParameters['Location']='devcloud';
+		vmwareParameters['AdditionalParameters']= {"DataStoreName":"vmstore","Thin":"true"};
+
+		var operation = "CreateVolume";
 		this.callCapi(operation,vmwareParameters);
 	},
 
@@ -49,13 +54,13 @@ VMWareCAPIAPIInvoker.prototype = {
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2019-07-16 14:08:12</sys_created_on>
         <sys_id>451e88fb77e63300c14554389a1061c5</sys_id>
-        <sys_mod_count>29</sys_mod_count>
+        <sys_mod_count>37</sys_mod_count>
         <sys_name>VMWareCAPIAPIInvoker</sys_name>
         <sys_package display_value="VMWare Custom" source="sn_vmware_custom">0e87a59377a23300c14554389a10613c</sys_package>
         <sys_policy>read</sys_policy>
         <sys_scope display_value="VMWare Custom">0e87a59377a23300c14554389a10613c</sys_scope>
         <sys_update_name>sys_script_include_451e88fb77e63300c14554389a1061c5</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2019-07-17 05:49:05</sys_updated_on>
+        <sys_updated_on>2019-07-18 07:42:20</sys_updated_on>
     </sys_script_include>
 </record_update>
